@@ -17,6 +17,9 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
+//body Parser
+app.use(express.json());
+
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -24,6 +27,7 @@ if (process.env.NODE_ENV === 'development') {
 
 //Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+
 const server = app.listen(PORT, () => {
   console.log(
     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
