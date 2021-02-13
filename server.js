@@ -5,14 +5,11 @@ const connectDB = require('./config/db');
 const colors = require('colors');
 const errorHandler = require('./middleware/error');
 
-// Load ENVIRONMENT VARIABLES
+// Load ENV VARS
 dontenv.config({ path: './config/config.env' });
 
 // Connect to database
 connectDB();
-
-// Route files
-const bootcamps = require('./routes/bootcamps');
 
 const PORT = process.env.PORT || 5000;
 
@@ -26,6 +23,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Route files
+const bootcamps = require('./routes/bootcamps');
 //Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
 
