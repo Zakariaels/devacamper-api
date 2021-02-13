@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const coursesRouter = require('express').Router();
 //import controllers
 const {
   getBootcamps,
@@ -9,12 +9,18 @@ const {
   getBootcampsWithinRadius,
 } = require('../controllers/bootcamps');
 
-router.route('/radius/:zipcode/:distance').get(getBootcampsWithinRadius);
-router.route('/').get(getBootcamps).post(createBootcamp);
-router
+//include other resource routers
+const courseRouter = require('./courses');
+
+//Re-router into other resource routers
+coursesRouter.use('/:bootcampId/courses', courseRouter);
+
+coursesRouter.route('/radius/:zipcode/:distance').get(getBootcampsWithinRadius);
+coursesRouter.route('/').get(getBootcamps).post(createBootcamp);
+coursesRouter
   .route('/:id')
   .get(getBootcamp)
   .put(updateBootcamp)
   .delete(deleteBootcamp);
 
-module.exports = router;
+module.exports = coursesRouter;
